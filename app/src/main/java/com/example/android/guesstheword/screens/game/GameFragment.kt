@@ -17,11 +17,13 @@
 package com.example.android.guesstheword.screens.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
@@ -30,6 +32,9 @@ import com.example.android.guesstheword.databinding.GameFragmentBinding
  * Fragment where the game is played
  */
 class GameFragment : Fragment() {
+
+    // initialize a GameViewModel, using ViewModelProviders
+    private lateinit var viewModel: GameViewModel
 
     // The current word
     private var word = ""
@@ -52,6 +57,13 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
+
+        Log.i("GameFragment", "called ViewModelProvider.of")
+        /* ##### PS: never construct view-model yourself if u did
+        u end up constructing a view-model every time the fragment was created #####
+        #### lifecycle lib creates ViewModel for u , u request it from ViewModelProvider */
+        viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+
 
         resetList()
         nextWord()
