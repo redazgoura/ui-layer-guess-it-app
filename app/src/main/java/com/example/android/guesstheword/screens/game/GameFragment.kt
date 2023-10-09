@@ -52,23 +52,22 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
-
         Log.i("GameFragment", "called ViewModelProvider.of")
         /* ##### PS: never construct view-model yourself if u did
         u end up constructing a view-model every time the fragment was created #####
         #### lifecycle lib creates ViewModel for u , u request it from ViewModelProvider */
         viewModel =  ViewModelProvider(this).get(GameViewModel::class.java)
 
+        //binding gameViewModel f rom xml file and the viewModel
+        binding.gameViewModel = viewModel
 
-        binding.correctButton.setOnClickListener {
-
+        // those 2 events calls are no longer needed here becauce there're already setup on the game_fragment.xml file
+       /* binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
         }
-
         binding.skipButton.setOnClickListener {
-
             viewModel.onSkip()
-        }
+        }*/
 
         //referencing to score liveDate
         // whenever the score changes the observer will be called
